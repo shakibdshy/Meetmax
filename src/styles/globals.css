@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-clr: #377DFF;
+  --clr-green: #38CB89;
+  --clr-red: #ff5531;
+  --clr-yellow: #ffab00;
+  --clr-black-700: #212733;
+  --clr-black-800: #191c21;
+  --clr-black-900: #0b1933;
+  --clr-text: #4e5e78;
+  --clr-text-100: #989ba2;
+  --clr-white-1: #f9fafc;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  color: var(--clr-text);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: white;
+    background: var(--clr-black-800);
+  }
+}
+
+.button-root {
+  background-color: var(--primary-clr);
+}
