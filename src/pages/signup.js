@@ -52,11 +52,11 @@ export function Signup(props) {
                     align="center"
                     className='text-white'
                 >
-                    Welcome back!
+                   Getting Started
                 </Title>
                 <Text color="dimmed" size="sm" align="center" mt={5}>
                     Already have an account?{' '}
-                    <Link href="/">
+                    <Link href="/signin">
                         <a>Sign In</a>
                     </Link>
                 </Text>
