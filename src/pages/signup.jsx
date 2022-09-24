@@ -17,7 +17,7 @@ import { IconAt, IconCalendar, IconLockOpen, IconMoodSmile, IconMoodSmileBeam } 
 import Link from 'next/link';
 import axios from 'axios';
 
-export function Signup(props) {
+export default function Signup(props) {
     const form = useForm({
         initialValues: {
             email: '',

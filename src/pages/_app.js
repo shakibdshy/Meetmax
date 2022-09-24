@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import '../styles/globals.css'
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
   const [colorScheme, setColorScheme] = useLocalStorage({
@@ -37,7 +38,9 @@ function MyApp({ Component, pageProps }) {
             },
           }}
         >
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </MantineProvider>
       </ColorSchemeProvider>
 
