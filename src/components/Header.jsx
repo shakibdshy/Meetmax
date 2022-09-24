@@ -9,7 +9,7 @@ import french from '../assets/french.png'
 import german from '../assets/german.png'
 import italian from '../assets/italian.png'
 import polish from '../assets/polish.png'
-import { IconArrowLeft, IconArrowRight, IconChevronDown, IconSearch } from '@tabler/icons';
+import { IconArrowLeft, IconArrowRight, IconChevronDown, IconMoonStars, IconSearch, IconSun } from '@tabler/icons';
 import Link from 'next/link';
 
 const data = [
@@ -55,7 +55,7 @@ const useStyles = createStyles((theme, { opened }) => ({
 
 const Header = () => {
     const theme = useMantineTheme();
-    const { colorScheme } = useMantineColorScheme();
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const dark = colorScheme === 'dark';
     const { asPath } = useRouter();
     const signIn = asPath === '/signin';
@@ -107,33 +107,52 @@ const Header = () => {
                             </div>
                         }
                         <div>
-                            {
-                                !signIn && !signUp ?
-                                    <Group spacing="sm" style={{ background: '#212833', borderRadius: '6px', paddingLeft: '15px', paddingTop: '2px', paddingBottom: '2px'}}>
-                                        <Text size="sm">
-                                            Username
-                                        </Text>
-                                        <Avatar size={45} src='https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80' radius={6} />
-                                    </Group>
-                                    :
-                                    <Menu
-                                        onOpen={() => setOpened(true)}
-                                        onClose={() => setOpened(false)}
-                                        radius="md"
-                                        width="target"
-                                    >
-                                        <Menu.Target>
-                                            <UnstyledButton className={classes.control}>
-                                                <Group spacing="xs">
-                                                    <Image src={selected.image} width={22} height={22} />
-                                                    <span className={classes.label}>{selected.label}</span>
-                                                </Group>
-                                                <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
-                                            </UnstyledButton>
-                                        </Menu.Target>
-                                        <Menu.Dropdown>{items}</Menu.Dropdown>
-                                    </Menu>
-                            }
+                            <Group>
+                                <ActionIcon
+                                    size="xl"
+                                    variant="default"
+                                    onClick={() => toggleColorScheme()}
+                                    title="Toggle color scheme"
+                                >
+                                    {dark ? <IconSun size={24} /> : <IconMoonStars size={24} />}
+                                </ActionIcon>
+                                {
+                                    !signIn && !signUp ?
+                                        <Group
+                                            spacing="sm"
+                                            style={{
+
+                                                background: dark ? '#212833' : 'transparent',
+                                                borderRadius: '6px',
+                                                paddingLeft: '15px',
+                                                paddingTop: '2px',
+                                                paddingBottom: '2px'
+                                            }}>
+                                            <Text size="md" weight='600'>
+                                                Username
+                                            </Text>
+                                            <Avatar size={45} src='https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80' radius={6} />
+                                        </Group>
+                                        :
+                                        <Menu
+                                            onOpen={() => setOpened(true)}
+                                            onClose={() => setOpened(false)}
+                                            radius="md"
+                                            width="target"
+                                        >
+                                            <Menu.Target>
+                                                <UnstyledButton className={classes.control}>
+                                                    <Group spacing="xs">
+                                                        <Image src={selected.image} width={22} height={22} />
+                                                        <span className={classes.label}>{selected.label}</span>
+                                                    </Group>
+                                                    <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
+                                                </UnstyledButton>
+                                            </Menu.Target>
+                                            <Menu.Dropdown>{items}</Menu.Dropdown>
+                                        </Menu>
+                                }
+                            </Group>
                         </div>
                     </Group>
                 </Container>
