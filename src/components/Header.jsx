@@ -61,6 +61,7 @@ const Header = () => {
     const { asPath } = useRouter();
     const { state, dispatch } = useContext(AuthContext);
     const { user } = state;
+    console.log(user);
     const signIn = asPath === '/signin';
     const signUp = asPath === '/signup';
     const [opened, setOpened] = useState(false);
