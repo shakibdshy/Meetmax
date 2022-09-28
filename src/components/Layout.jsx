@@ -1,15 +1,25 @@
+import React, { useContext, useEffect } from 'react'
 import { Container, Group } from '@mantine/core'
-import { useRouter } from 'next/router'
-import React from 'react'
+import { AuthContext } from '../context/AuthContext'
+import { useRouter } from 'next/router';
 import Header from './Header'
 import PrimaryHeader from './PrimarySidebar'
 import SecondarySidebar from './SecondarySidebar'
 
 const Layout = ({ children }) => {
-    const { asPath } = useRouter();
-    const home = asPath === '/';
-    const signIn = asPath === '/signin';
-    const signUp = asPath === '/signup';
+    const router = useRouter();
+    const { state, dispatch } = useContext(AuthContext);
+    const { user } = state;
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/signin?redirect=' + router.asPath);
+        }
+    }, []);
+
+    const home = router.asPath === '/';
+    const signIn = router.asPath === '/signin';
+    const signUp = router.asPath === '/signup';
     return (
         <>
             <Header />

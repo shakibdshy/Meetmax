@@ -3,6 +3,7 @@ import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import '../styles/globals.css'
 import Layout from '../components/Layout';
+import { AuthContextProvider } from '../context/AuthContext';
 
 function MyApp({ Component, pageProps }) {
   const [colorScheme, setColorScheme] = useLocalStorage({
@@ -38,9 +39,11 @@ function MyApp({ Component, pageProps }) {
             },
           }}
         >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <AuthContextProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AuthContextProvider>
         </MantineProvider>
       </ColorSchemeProvider>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from '@mantine/form';
 import {
     TextInput,
@@ -12,36 +12,45 @@ import {
     Title,
     Stack,
 } from '@mantine/core';
-import {IconLockOpen, IconMoodSmile } from '@tabler/icons';
+import { IconLockOpen, IconMoodSmile } from '@tabler/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import axios from 'axios';
+import Cookies from "js-cookie";
+import { AuthContext } from '../context/AuthContext';
 
 const Signin = () => {
     const form = useForm({
         initialValues: {
-            email: '',
-            name: '',
             username: '',
             password: '',
-            birth: '',
-            terms: true,
-        },
-
-        validate: {
-            email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
-        },
+        }
     });
+    const router = useRouter();
+    const { redirect } = router.query;
+    const { state, dispatch } = useContext(AuthContext);
+    const { user } = state;
 
-    console.log(form.values);
+    useEffect(() => {
+        if (user) {
+            router.push('/');
+        }
+    }, []);
+
+    // console.log(form.values);
 
     const handleSubmit = async e => {
         e.preventDefault();
-
-        const url = "https://meetmax-server.cyclic.app/api/auth/signin";
-        const { data } = await axios.post(url, form.values);
-
-        console.log(data);
+        dispatch({ type: "LOGIN_START" });
+        try {
+            const url = "https://meetmax-server.cyclic.app/api/auth/signin";
+            const { data } = await axios.post(url, form.values);
+            dispatch({ type: "LOGIN_SUCCESS", payload: data });
+            Cookies.set("user", data);
+            router.push(redirect || '/');
+        } catch (err) {
+            dispatch({ type: "LOGIN_FAILURE" });
+        }
     }
 
     return (
@@ -104,6 +113,9 @@ const Signin = () => {
                         <Group position="apart" mt="xl">
                             <Button fullWidth size="md" type="submit">Sign In</Button>
                         </Group>
+                        {/* {
+                            error && <Text color="red" size="sm" align="center" mt={5}></Text>
+                        } */}
                     </form>
                 </Paper>
             </Container>

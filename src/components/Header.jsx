@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { ActionIcon, Avatar, Box, Container, createStyles, Group, Menu, Select, Text, TextInput, Title, UnstyledButton, useMantineColorScheme, useMantineTheme } from '@mantine/core';
@@ -11,6 +11,7 @@ import italian from '../assets/italian.png'
 import polish from '../assets/polish.png'
 import { IconArrowLeft, IconArrowRight, IconChevronDown, IconMoonStars, IconSearch, IconSun } from '@tabler/icons';
 import Link from 'next/link';
+import { AuthContext } from '../context/AuthContext';
 
 const data = [
     { label: 'English', image: english },
@@ -58,6 +59,8 @@ const Header = () => {
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const dark = colorScheme === 'dark';
     const { asPath } = useRouter();
+    const { state, dispatch } = useContext(AuthContext);
+    const { user } = state;
     const signIn = asPath === '/signin';
     const signUp = asPath === '/signup';
     const [opened, setOpened] = useState(false);
@@ -129,7 +132,7 @@ const Header = () => {
                                                 paddingBottom: '2px'
                                             }}>
                                             <Text size="md" weight='600'>
-                                                Username
+                                                {user?.name}
                                             </Text>
                                             <Avatar size={45} src='https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80' radius={6} />
                                         </Group>
