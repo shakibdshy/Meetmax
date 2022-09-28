@@ -31,11 +31,11 @@ const Signin = () => {
     const { state, dispatch } = useContext(AuthContext);
     const { user } = state;
 
-    useEffect(() => {
-        if (user) {
-            router.push('/');
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (user) {
+    //         router.push('/');
+    //     }
+    // }, []);
 
     // console.log(form.values);
 
@@ -46,7 +46,7 @@ const Signin = () => {
             const url = "https://meetmax-server.cyclic.app/api/auth/signin";
             const { data } = await axios.post(url, form.values);
             dispatch({ type: "LOGIN_SUCCESS", payload: data });
-            Cookies.set("user", data);
+            // Cookies.set("user", data);
             router.push(redirect || '/');
         } catch (err) {
             dispatch({ type: "LOGIN_FAILURE" });

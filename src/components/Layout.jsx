@@ -11,11 +11,11 @@ const Layout = ({ children }) => {
     const { state, dispatch } = useContext(AuthContext);
     const { user } = state;
 
-    useEffect(() => {
-        if (!user) {
-            router.push('/signin?redirect=' + router.asPath);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!user) {
+    //         router.push('/signin?redirect=' + router.asPath);
+    //     }
+    // }, []);
 
     const home = router.asPath === '/';
     const signIn = router.asPath === '/signin';
